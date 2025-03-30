@@ -1,24 +1,29 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { Button } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 export default function Index() {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <Text>Welcome</Text>
-      <Text>User Details CRUD App</Text>
+      <Text variant="displaySmall" style={styles.row}>
+        Welcome
+      </Text>
+      <Text variant="bodyLarge" style={styles.row}>
+        User Details CRUD App
+      </Text>
       <Button
         icon="account"
-        buttonColor="green"
+        buttonColor="#198754"
         textColor="white"
+        style={{ borderRadius: 5 }}
         onPress={() => {
           router.push("/settings");
         }}
       >
-        View Details
+        View Profile
       </Button>
-      <Link href="/test">View Test</Link>
     </View>
   );
 }
@@ -30,5 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     fontSize: 20,
     color: "#fff",
+  },
+  row: {
+    marginBottom: 8,
   },
 });

@@ -1,4 +1,8 @@
-import { getDetails, updateDetails } from "@/store/settings/details";
+import {
+  getDetails,
+  updateDetails,
+  clearDetails,
+} from "@/store/settings/details";
 import React, { useState } from "react";
 import {
   View,
@@ -7,10 +11,16 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, Snackbar } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 
 const PersonalDetailsForm: React.FC = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
+
   const dispatch = useDispatch();
   // const details = useSelector((state: any) => state.details);
   const details = useSelector(getDetails);
@@ -51,10 +61,13 @@ const PersonalDetailsForm: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.inputGroup}>
+        {/* <Text>test</Text> */}
         <TextInput
           label="First Name"
           style={styles.input}
           value={formData.firstName}
+          dense={true}
+          mode="outlined"
           onChangeText={(text) => handleInputChange("firstName", text)}
         />
       </View>
@@ -63,6 +76,8 @@ const PersonalDetailsForm: React.FC = () => {
           style={styles.input}
           label="Enter your last name"
           value={formData.lastName}
+          dense={true}
+          mode="outlined"
           onChangeText={(text) => handleInputChange("lastName", text)}
         />
       </View>
@@ -72,6 +87,8 @@ const PersonalDetailsForm: React.FC = () => {
           style={styles.input}
           keyboardType="email-address"
           value={formData.email}
+          dense={true}
+          mode="outlined"
           onChangeText={(text) => handleInputChange("email", text)}
         />
       </View>
@@ -82,6 +99,8 @@ const PersonalDetailsForm: React.FC = () => {
           value={formData.age !== null ? String(formData.age) : ""}
           keyboardType="numeric"
           maxLength={2}
+          dense={true}
+          mode="outlined"
           onChangeText={(text) => {
             const age = parseInt(text);
             if (!isNaN(age)) {
@@ -97,10 +116,12 @@ const PersonalDetailsForm: React.FC = () => {
           style={styles.input}
           label="Gender"
           value={formData.gender}
+          dense={true}
+          mode="outlined"
           onChangeText={(text) => handleInputChange("gender", text)}
         />
       </View>
-      <TouchableOpacity style={styles.button}>
+      {/* <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonText}
           onPress={() => {
@@ -109,7 +130,38 @@ const PersonalDetailsForm: React.FC = () => {
         >
           Save
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <View style={{ alignItems: "center" }}>
+        <Button
+          icon="content-save"
+          buttonColor="#198754"
+          textColor="white"
+          style={styles.button}
+          onPress={() => {
+            handleSubmit(formData);
+            onToggleSnackBar();
+          }}
+        >
+          Save
+        </Button>
+      </View>
+
+      <View style={styles.snackbar}>
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          duration={3000}
+          action={{
+            label: "Undo",
+            onPress: () => {
+              // call the clearDetails from redux
+              dispatch(clearDetails());
+            },
+          }}
+        >
+          Changes Saved!
+        </Snackbar>
+      </View>
     </ScrollView>
   );
 };
@@ -118,31 +170,36 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: "#fff",
+    // minimum height 100 vh
+    minHeight: "100%",
   },
   inputGroup: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
   },
-  label: {
-    flex: 1,
-    fontWeight: "bold",
-    fontSize: 16,
-  },
   input: {
     flex: 2,
-    fontSize: 16,
+    fontSize: 14,
+    // height: 30,
+    // paddingVertical: 1,
+    // padding: 0,
   },
   button: {
     backgroundColor: "#198754",
-    padding: 12,
+    // padding: 12,
     borderRadius: 4,
-    alignItems: "center",
+    // alignItems: "center",
     marginTop: 16,
+    width: "auto",
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  snackbar: {
+    flex: 1,
+    justifyContent: "space-between",
   },
 });
 

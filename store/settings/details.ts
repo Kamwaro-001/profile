@@ -38,7 +38,7 @@ const DetailsSlice = createSlice({
   },
 });
 
-export const { setDetails, updateDetails } = DetailsSlice.actions;
+export const { setDetails, updateDetails, clearDetails } = DetailsSlice.actions;
 
 export const getDetails = (state: { details: PersonalDetails }) =>
   state.details;

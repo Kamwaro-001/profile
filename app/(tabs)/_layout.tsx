@@ -8,9 +8,10 @@ export default function TabLayout() {
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" color={color} size={size} />
+          tabBarIcon: ({ color = "#198754", size }) => (
+            <Ionicons name="home" color={"#198754"} size={size} />
           ),
+          tabBarLabelStyle: { color: "#198754" },
           headerShown: false,
         }}
       />
@@ -19,8 +20,9 @@ export default function TabLayout() {
         options={{
           title: "Settings",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings" color={color} size={size} />
+            <Ionicons name="settings" color={"#198754"} size={size} />
           ),
+          tabBarLabelStyle: { color: "#198754" },
           headerShown: false,
         }}
       />

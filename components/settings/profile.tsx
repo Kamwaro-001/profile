@@ -17,37 +17,35 @@ const Profile: React.FC = () => {
         <Text style={styles.label}>First Name:</Text>
         <Text style={styles.value}>{details.firstname}</Text>
       </View>
-      <Divider
-        bold={true}
-        theme={{ colors: { primary: "green" }, dark: false }}
-      />
 
       <View style={styles.row}>
         <Text style={styles.label}>Last Name:</Text>
         <Text style={styles.value}>{details.lastname}</Text>
       </View>
-      <Divider />
 
       <View style={styles.row}>
         <Text style={styles.label}>Age:</Text>
         <Text style={styles.value}>{details.age}</Text>
       </View>
-      <Divider />
 
       <View style={styles.row}>
         <Text style={styles.label}>Gender:</Text>
         <Text style={styles.value}>{details.gender}</Text>
       </View>
-      <Divider />
 
       <View style={styles.row}>
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.value}>{details.email}</Text>
       </View>
-      <Divider />
 
-      <View style={styles.row}>
-        <Button onPress={() => router.push("/settings/edit")}>
+      <View style={[styles.row, { borderBottomWidth: 0 }]}>
+        <Button
+          icon="pen"
+          buttonColor="#198754"
+          textColor="white"
+          style={{ borderRadius: 5, width: "auto", margin: "auto" }}
+          onPress={() => router.push("/settings/edit")}
+        >
           Edit Profile
         </Button>
       </View>
@@ -62,10 +60,15 @@ const styles = StyleSheet.create({
     // everything center aligned
     alignItems: "center",
     justifyContent: "center",
+    margin: 16,
+    borderRadius: 8,
   },
   row: {
     flexDirection: "row",
     marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    width: "100%",
     // backgroundColor: "#f9f9f9",
   },
   label: {
