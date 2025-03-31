@@ -1,7 +1,23 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "@/store/auth/auth";
+import { useEffect, useState } from "react";
 
 export default function TabLayout() {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && !isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isMounted, isAuthenticated, router]);
   return (
     <Tabs>
       <Tabs.Screen

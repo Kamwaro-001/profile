@@ -1,13 +1,26 @@
+import { selectIsAuthenticated } from "@/store/auth/auth";
 import store from "@/store/store";
 import { Stack } from "expo-router";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
+
+function RootNavigator() {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  return (
+    <Stack>
+      {isAuthenticated ? (
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      ) : (
+        <Stack.Screen name="login" options={{ headerShown: true }} />
+      )}
+    </Stack>
+  );
+}
 
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <RootNavigator />
     </Provider>
   );
 }
